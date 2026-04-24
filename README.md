@@ -1,4 +1,4 @@
-# 🌍 Empire Universe 4 - Gestionnaire de Planètes v1
+# 🌍 Empire Universe 4 - Gestionnaire de Planètes v1.1
 
 Outil de gestion pour les explorateurs d'Empire Universe 4. Permet d'enregistrer, rechercher et filtrer les planètes découvertes.
  ![Aperçu5](screenshots/apercu5.png)
@@ -28,20 +28,23 @@ Outil de gestion pour les explorateurs d'Empire Universe 4. Permet d'enregistrer
 ### ✨ Ajouts
 - Possibilité d'ajouter/modifier une note sur chaque planète (📝)
 - Possibilité de supprimer une planète (❌)
+- Possibiliter de filtrer par nom de planète
 - Ajout du nom de la planète
 
 ---
 
 ## 📋 À venir (TODO)
 
-- [ ] Filtre de recherche par nom de planète (Jupiter, Mars, etc.)
+-Fiting
+-Modules
+-Commerce
 
 ---
 
 ## 🚀 Installation
 
 1. Télécharger `empire_manager.exe`
-2. Déplacer dans un dossier ( un fichier pour la base de donné va être créée)
+2. Déplacer dans un dossier ( un fichier pour la base de donnée va être créée)
 3. Lancer le fichier
 4. Aucune installation nécessaire
 
