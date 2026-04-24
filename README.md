@@ -7,10 +7,14 @@ Outil de gestion pour les explorateurs d'Empire Universe 4. Permet d'enregistrer
 ## 📥 Ajout de planètes
 
 1. **Page "Aperçu"** → `CTRL+A` → `CTRL+C`
-2. **Cliquer sur "Ajouter une planète"** → `CTRL+V`
-3. **Page "Analyse de Ressource"** → `CTRL+A` → `CTRL+C`
-4. **Dans la popup d'ajout de planete** → `CTRL+V`
-5. **Cliquer sur "Ajouter"**
+2. ![Aperçu 1](apercu1.png)
+3. **Cliquer sur "Ajouter une planète"** → `CTRL+V`
+4. ![Aperçu 2](apercu2.png)
+5. **Page "Analyse de Ressource"** → `CTRL+A` → `CTRL+C`
+6. ![Aperçu 3](apercu3.png)
+7. **Dans la popup d'ajout de planete** → `CTRL+V`
+8. ![Aperçu 4](apercu4.png)
+9. **Cliquer sur "Ajouter"**
 
 > ✅ Le CTRL+A massif fonctionne même avec le chat et les menus !
 
