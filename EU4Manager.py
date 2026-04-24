@@ -611,6 +611,120 @@ class EU4Manager:
         resultat = cursor.fetchone()
         conn.close()
         return resultat is not None
+    
+    def parser_rapport_sonde(self, texte):
+        lignes = [l.strip() for l in texte.strip().split('\n') if l.strip()]
+        
+        resultat = {
+            "nom_planete": "",
+            "systeme": "",
+            "position": "",
+            "ressources": []
+        }
+        # 0 trouver le nom de la planète
+        for idx, ligne in enumerate(lignes):
+            if ligne.lower() == "emplacement" and idx > 0:
+                resultat["nom_planete"] = lignes[idx - 1]
+                break
+
+        # ⭐ 1. Trouver la BONNE coordonnée (celle près des caractéristiques)
+        coordonnees = []
+        for idx, ligne in enumerate(lignes):
+            parties = ligne.split()
+            if len(parties) >= 2:
+                premier = parties[0].replace("-", "")
+                if premier.isdigit() and ":" in parties[1]:
+                    # Vérifie si les lignes suivantes contiennent des caractéristiques
+                    for offset in range(1, 5):
+                        if idx + offset < len(lignes):
+                            ligne_suivante = lignes[idx + offset]
+                            if any(key in ligne_suivante for key in ["Eau", "Gravité", "Température", "Magnétisme", "Vent Solaire", "Atmosphère"]):
+                                coordonnees.append((idx, parties[0], parties[1]))
+                                break
+        
+        # Prend la dernière coordonnée trouvée (celle juste avant les caractéristiques)
+        if coordonnees:
+            _, systeme, position = coordonnees[-1]
+            resultat["systeme"] = systeme
+            resultat["position"] = position
+        else:
+            # Fallback : cherche une coordonnée simple
+            for ligne in lignes:
+                parties = ligne.split()
+                if len(parties) >= 2:
+                    premier = parties[0].replace("-", "")
+                    if premier.isdigit() and ":" in parties[1]:
+                        resultat["systeme"] = parties[0]
+                        resultat["position"] = parties[1]
+                        break
+        
+        # ⭐ 2. Parcourir toutes les lignes pour trouver les valeurs
+        for i, ligne in enumerate(lignes):
+            import re
+            
+            # EauXX%
+            if "Eau" in ligne and "%" in ligne:
+                match = re.search(r"Eau([\d.]+%)", ligne)
+                if match:
+                    resultat["eau"] = match.group(1)
+            
+            # GravitéxX.XX
+            elif "Gravitéx" in ligne:
+                match = re.search(r"Gravitéx([\d.]+)", ligne)
+                if match:
+                    resultat["gravite"] = match.group(1)
+            
+            # TempératureXXX°C
+            elif "Température" in ligne and "°C" in ligne:
+                match = re.search(r"Température(-?[\d.]+°C)", ligne)
+                if match:
+                    resultat["temperature"] = match.group(1)
+            
+            # MagnétismeXX
+            elif "Magnétisme" in ligne:
+                match = re.search(r"Magnétisme(\d+)", ligne)
+                if match:
+                    resultat["magnetisme"] = match.group(1)
+            
+            # Vent SolaireXX
+            elif "Vent Solaire" in ligne:
+                match = re.search(r"Vent Solaire(\d+)", ligne)
+                if match:
+                    resultat["vent_solaire"] = match.group(1)
+            
+            # AtmosphèreXX%
+            elif "Atmosphère" in ligne and "%" in ligne:
+                match = re.search(r"Atmosphère([\d.]+%)", ligne)
+                if match:
+                    resultat["atmosphere"] = match.group(1)
+            
+            # ⭐ 3. Ressources : cherche "TitaneTitane" etc.
+            ressources_connues = ["Titane", "Cuivre", "Aluminium", "Silicium", 
+                                "Fer", "Mercure", "Uranium", "Krypton", 
+                                "Azote", "Hydrogène"]
+            
+            for res in ressources_connues:
+                if ligne == res + res:
+                    # La ressource est trouvée, cherche le pourcentage dans les 3 lignes suivantes
+                    for j in range(i+1, min(i+5, len(lignes))):
+                        if "%" in lignes[j]:
+                            match_pct = re.search(r"([\d.]+%)", lignes[j])
+                            if match_pct:
+                                resultat["ressources"].append({
+                                    "nom": res,
+                                    "pourcentage": match_pct.group(1),
+                                    "efficacite": lignes[j+1] if j+1 < len(lignes) else ""
+                                })
+                            break
+                    break
+        
+        # Valeurs par défaut
+        defaults = ["eau", "gravite", "temperature", "magnetisme", "vent_solaire", "atmosphere"]
+        for key in defaults:
+            if key not in resultat or not resultat[key]:
+                resultat[key] = "0"
+        
+        return resultat
 
     def ajouter_champ_ressource(self):
         frame = ttk.Frame(self.frame_ressources)
