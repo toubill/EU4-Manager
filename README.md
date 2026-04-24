@@ -14,6 +14,7 @@ Ajout de planètes :
 3- Se rendre sur la page  "Analyse de Ressource" Faire CTRL+A, CTRL+C
 
 (Screen)
+
 4- A la suite dans la popup d'ajout de planète faire CTRL + V
 
 5- Cliquer sur ajouter
