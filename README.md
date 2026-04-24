@@ -1,4 +1,4 @@
-# 🌍 Empire Universe 4 - Gestionnaire de Planètes
+# 🌍 Empire Universe 4 - Gestionnaire de Planètes v1
 
 Outil de gestion pour les explorateurs d'Empire Universe 4. Permet d'enregistrer, rechercher et filtrer les planètes découvertes.
 
@@ -36,15 +36,9 @@ Outil de gestion pour les explorateurs d'Empire Universe 4. Permet d'enregistrer
 ## 🚀 Installation
 
 1. Télécharger `empire_manager.exe`
-2. Lancer le fichier
-3. Aucune installation nécessaire
-
----
-
-## 📦 Dépendances
-
-- Python 3.12+ (si exécution depuis le script)
-- Tkinter (inclus avec Python)
+2. Déplacer dans un dossier ( un fichier pour la base de donné va être créée)
+3. Lancer le fichier
+4. Aucune installation nécessaire
 
 ---
 
