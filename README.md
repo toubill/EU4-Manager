@@ -28,6 +28,7 @@ Outil de gestion pour les explorateurs d'Empire Universe 4. Permet d'enregistrer
 ### ✨ Ajouts
 - Possibilité d'ajouter/modifier une note sur chaque planète (📝)
 - Possibilité de supprimer une planète (❌)
+- Ajout du nom de la planète
 
 ---
 
