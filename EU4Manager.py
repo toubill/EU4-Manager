@@ -522,11 +522,12 @@ class EU4Manager:
         canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
-        # Scroll avec la molette
+       # Scroll avec la molette - Version alternative
         def _on_mousewheel(event):
             canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-        canvas.bind("<MouseWheel>", _on_mousewheel)
-    
+
+        self.root.bind_all("<MouseWheel>", _on_mousewheel)
+            
     def ouvrir_popup_ajout(self):
         """Ouvre une fenêtre popup pour coller le rapport de sonde"""
         popup = tk.Toplevel(self.root)
@@ -548,6 +549,11 @@ class EU4Manager:
         zone_texte = tk.Text(popup, height=20, font=("Consolas", 9), bg="#2d2d3d", fg="#ffffff", insertbackground="white")
         zone_texte.pack(fill=tk.BOTH, expand=True, padx=15, pady=5)
         zone_texte.focus_set()
+
+        def aller_a_la_fin(event):
+            zone_texte.after(10, lambda: zone_texte.see("end"))
+
+        zone_texte.bind("<Control-v>", aller_a_la_fin)
 
         # Boutons
         frame_boutons = tk.Frame(popup, bg="#1e1e2e")
